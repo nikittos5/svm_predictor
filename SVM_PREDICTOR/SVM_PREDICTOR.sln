@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{D196441A-8CEF-401A-8C29-6B268AF2B16F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SVMFORM", "SVMFORM\SVMFORM.csproj", "{B3A692E6-4908-4C92-AE5F-33DE2BC37BD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D196441A-8CEF-401A-8C29-6B268AF2B16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D196441A-8CEF-401A-8C29-6B268AF2B16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D196441A-8CEF-401A-8C29-6B268AF2B16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D196441A-8CEF-401A-8C29-6B268AF2B16F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A692E6-4908-4C92-AE5F-33DE2BC37BD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A692E6-4908-4C92-AE5F-33DE2BC37BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A692E6-4908-4C92-AE5F-33DE2BC37BD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A692E6-4908-4C92-AE5F-33DE2BC37BD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

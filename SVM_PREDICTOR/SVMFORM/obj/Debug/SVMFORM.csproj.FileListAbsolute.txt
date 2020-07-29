@@ -1,0 +1,10 @@
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\bin\Debug\SVMFORM.exe.config
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\bin\Debug\SVMFORM.exe
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\bin\Debug\SVMFORM.pdb
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\obj\Debug\SVMFORM.csprojAssemblyReference.cache
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\obj\Debug\SVMFORM.Form1.resources
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\obj\Debug\SVMFORM.Properties.Resources.resources
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\obj\Debug\SVMFORM.csproj.GenerateResource.cache
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\obj\Debug\SVMFORM.csproj.CoreCompileInputs.cache
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\obj\Debug\SVMFORM.exe
+C:\Users\furs0\Desktop\svm_predictor\SVM_PREDICTOR\SVMFORM\obj\Debug\SVMFORM.pdb
