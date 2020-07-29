@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace SVMFORM
 {
-    public partial class Form1 : Form 
+    public partial class Form1 : Form
     {
-        string text;
-        public Form1(string text="")
+        private Solver solver;
+        public Form1()
         {
             InitializeComponent();
-            this.text = text;
-            this.textBox1.Text = text;
+            this.label1.Text = "Normal";
+            solver = new Solver();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -27,7 +27,15 @@ namespace SVMFORM
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            this.Close();
+            var teacher = new Teacher();
+            teacher.Learn();
+        }
+
+        private async void timer1_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("Читаем из базы");
+            var result = await Task.Run(solver.HandleNextData);
+            label1.Text = result;
         }
     }
 }
