@@ -19,27 +19,35 @@ namespace SVMFORM
             string testXlsxFilePath = "..\\..\\data\\1data.xlsx";
             DataTable table = new ExcelReader(testXlsxFilePath, false).GetWorksheet("sheet1");
             double[][] jtable = table.ToJagged();
-            double[][] traintable = new double[4000][];
-            double[][] testtable = new double[966][];
+            double[][] traintable = new double[4897][];
+            double[][] testtable = new double[69][];
             Console.WriteLine(jtable[0][0]);
-            for (int i = 0; i < 4000; i++)
-                traintable[i] = jtable[i];
-            for (int i = 4000; i < 4966; i++)
-                testtable[i - 4000] = jtable[i];
-            var learn = new OneclassSupportVectorLearning<Gaussian>()
+            for (int i = 0; i < 4897; i++)
             {
-                UseKernelEstimation = true
+                traintable[i] = new double[5]; 
+                for (int j = 0; j < 5; j++)
+                    traintable[i][j] = jtable[i][j];
+            }
+            for (int i = 4897; i < 4966; i++)
+            {
+                testtable[i- 4897] = new double[5];
+                for (int j = 0; j < 5; j++)
+                    testtable[i - 4897][j] = jtable[i][j];
+            }
+            var learn = new OneclassSupportVectorLearning<Linear>()
+            {
+                Kernel = new Linear(),
+                Nu = 0.01
             };
             var svm = learn.Learn(traintable);
             bool[] predicts = svm.Decide(testtable);
             int countOfTrue = 0;
             foreach (bool pred in predicts)
             {
-                Console.Write("{0} ", pred);
                 if (pred == true)
                     countOfTrue++;
             }
-            Console.WriteLine(countOfTrue * .1 / 966);
+            Console.WriteLine(countOfTrue * 1.0 / 69 *100);
             Console.ReadLine();
     }
     }
