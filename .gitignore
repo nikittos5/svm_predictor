@@ -9,3 +9,5 @@
 /bin
 /obj
 /SVM_PREDICTOR/packages
+/SVM_PREDICTOR/SVMFORM/data/test.csv
+/SVM_PREDICTOR/SVMFORM/data/train.csv
