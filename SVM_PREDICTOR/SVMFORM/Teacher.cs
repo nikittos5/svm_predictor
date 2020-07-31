@@ -1,54 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Accord.Statistics.Models.Regression.Linear;
-using Accord.Statistics.Analysis;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
 using Accord.IO;
 using Accord.Math;
-using System.Data;
 using Accord.MachineLearning.VectorMachines.Learning;
-using Accord.Math.Optimization.Losses;
 using Accord.Statistics.Kernels;
-using Accord.Controls;
+using Accord.MachineLearning.VectorMachines;
+using Accord.Statistics.Filters;
+using Accord;
 
 namespace SVMFORM
 {
     class Teacher
     {
-        public void Learn()
+        private double[][] trainDataTable;
+        public void GetTrainData(string pathToTrainData, string sheet = "sheet1")
         {
-            string testXlsxFilePath = "..\\..\\data\\1data.xlsx";
-            DataTable table = new ExcelReader(testXlsxFilePath, false).GetWorksheet("sheet1");
-            double[][] jtable = table.ToJagged();
-            double[][] traintable = new double[4897][];
-            double[][] testtable = new double[69][];
-            Console.WriteLine(jtable[0][0]);
-            for (int i = 0; i < 4897; i++)
+            //Загружает данные из Excell в trainDataTable
+            trainDataTable = new ExcelReader(pathToTrainData).GetWorksheet(sheet).ToJagged();
+            //Нормализация
+            trainDataTable = NormalizeData(trainDataTable);
+        }
+        private double[][] NormalizeData(double[][] dataTable)
+        {
+            double[][] dTable = new double[dataTable.GetLength(0)][];
+            for (int i = 0; i < dataTable.GetLength(0); i++)
             {
-                traintable[i] = new double[5]; 
-                for (int j = 0; j < 5; j++)
-                    traintable[i][j] = jtable[i][j];
+                dTable[i] = new double[dataTable[0].Length];
+                Array.Copy(dataTable[i], dTable[i], dataTable[0].Length);
             }
-            for (int i = 4897; i < 4966; i++)
+            for (int i = 0; i < dTable.GetLength(0); i++)
             {
-                testtable[i- 4897] = new double[5];
-                for (int j = 0; j < 5; j++)
-                    testtable[i - 4897][j] = jtable[i][j];
+                double lamb = 0;
+                for (int j = 0; j < dTable[0].Length; j++)
+                    lamb += dTable[i][j] * dTable[i][j];
+                lamb = Math.Sqrt(lamb);
+                for (int j = 0; j < dTable[0].Length; j++)
+                    dTable[i][j] /= lamb;
             }
-            var learn = new OneclassSupportVectorLearning<Linear>()
+            return dTable;
+        }
+        public SupportVectorMachine<Linear> Learn()
+        {
+            var teacher = new OneclassSupportVectorLearning<Linear>()
             {
                 Kernel = new Linear(),
-                Nu = 0.01
+                Nu = 0.1//Вот этот коэффициент как-то влияет на точность, я до конца не понял
             };
-            var svm = learn.Learn(traintable);
-            bool[] predicts = svm.Decide(testtable);
-            int countOfTrue = 0;
-            foreach (bool pred in predicts)
-            {
-                if (pred == true)
-                    countOfTrue++;
-            }
-            Console.WriteLine(countOfTrue * 1.0 / 69 *100);
-            Console.ReadLine();
-    }
+            return teacher.Learn(trainDataTable);
+        }
     }
 }

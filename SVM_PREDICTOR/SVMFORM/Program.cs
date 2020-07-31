@@ -14,11 +14,9 @@ namespace SVMFORM
         [STAThread]
         static void Main()
         {
-            new Teacher().Learn();
-           /* Application.EnableVisualStyles();
+            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-            */
         }
     }
 }
