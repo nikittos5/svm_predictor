@@ -43,11 +43,11 @@ namespace SVMFORM
             }
             return dTable;
         }
-        public SupportVectorMachine<Linear> Learn()
+        public SupportVectorMachine<Gaussian> Learn()
         {
-            var teacher = new OneclassSupportVectorLearning<Linear>()
+            var teacher = new OneclassSupportVectorLearning<Gaussian>()
             {
-                Kernel = new Linear(),
+                Kernel = new Gaussian(0.1), // Будем это ядро использовать
                 Nu = 0.1//Вот этот коэффициент как-то влияет на точность, я до конца не понял
             };
             return teacher.Learn(trainDataTable);

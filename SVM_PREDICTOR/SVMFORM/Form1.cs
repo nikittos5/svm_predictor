@@ -18,8 +18,8 @@ namespace SVMFORM
             InitializeComponent();
             this.label1.Text = "Normal";
             solver = new Solver();
-            solver.GetLearnedSVM("..\\..\\data\\1data.xlsx");//обучает модель
-            solver.GetNextDataTable("..\\..\\data\\1data.xlsx");//тестирует модель
+            solver.GetLearnedSVM("1data.xlsx");//обучает модель
+            solver.GetNextDataTable("1data.xlsx");//тестирует модель
         }
 
         private void Form1_Load(object sender, EventArgs e)

@@ -15,7 +15,7 @@ namespace SVMFORM
     {
         private double[][] dataTable;
         private int numberOfNextData = 0;
-        private SupportVectorMachine<Linear> learnedSVM;
+        private SupportVectorMachine<Gaussian> learnedSVM;
         private Random random;
         public Solver()
         {
