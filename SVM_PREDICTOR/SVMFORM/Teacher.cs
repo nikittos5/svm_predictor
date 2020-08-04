@@ -11,37 +11,34 @@ using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
 using Accord.Statistics.Filters;
 using Accord;
+using Accord.Math.Integration;
 
 namespace SVMFORM
 {
     class Teacher
     {
-        private double[][] trainDataTable;
+        private DataTable trainDataTable;
+        private double[][] trainDataJagged;
+        public double[] mean;
+        public double[] rmsd;
         public void GetTrainData(string pathToTrainData, string sheet = "sheet1")
         {
             //Gets train table from excell file to double matrix (svm learning method requires double matrix as argument)
             trainDataTable = new DataReader("train_data").GetDataTable();
-
+            trainDataJagged = NormalizeData(trainDataTable).ToJagged();
         }
-        private double[][] NormalizeData(double[][] dataTable)
+        private DataTable NormalizeData(DataTable dataTable)
         {
-            //Normalize data matrix
-            double[][] dTable = new double[dataTable.GetLength(0)][];
-            for (int i = 0; i < dataTable.GetLength(0); i++)
+            //Normalization
+            Normalization normalization = new Normalization(trainDataTable);
+            mean = new double[dataTable.Columns.Count];
+            rmsd = new double[dataTable.Columns.Count];
+            for(int i = 0; i< dataTable.Columns.Count; i++)
             {
-                dTable[i] = new double[dataTable[0].Length];
-                Array.Copy(dataTable[i], dTable[i], dataTable[0].Length);
+                mean[i] = normalization[i].Mean;
+                rmsd[i] = normalization[i].StandardDeviation;
             }
-            for (int i = 0; i < dTable.GetLength(0); i++)
-            {
-                double lamb = 0;
-                for (int j = 0; j < dTable[0].Length; j++)
-                    lamb += dTable[i][j] * dTable[i][j];
-                lamb = Math.Sqrt(lamb);
-                for (int j = 0; j < dTable[0].Length; j++)
-                    dTable[i][j] /= lamb;
-            }
-            return dTable;
+            return normalization.Apply(dataTable);
         }
         public SupportVectorMachine<Gaussian> Learn()
         {
@@ -51,7 +48,7 @@ namespace SVMFORM
                 Kernel = new Gaussian(0.1),
                 Nu = 0.1
             };
-            return teacher.Learn(trainDataTable);
+            return teacher.Learn(trainDataJagged);
         }
     }
 }

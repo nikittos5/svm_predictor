@@ -14,10 +14,11 @@ namespace SVMFORM
 {
     class Solver
     {
-        private Data data;
         private SupportVectorMachine<Gaussian> learnedSVM;
         private Random random;
         private DataReader dataReader;
+        private double[] mean;
+        private double[] rmsd;
         public Solver()
         {
             //Randomizer
@@ -33,20 +34,24 @@ namespace SVMFORM
             Teacher teacher = new Teacher();
             teacher.GetTrainData(pathToTrainData);
             learnedSVM = teacher.Learn();
+            mean = teacher.mean;
+            rmsd = teacher.rmsd;
         }
         public string HandleNextData()
         {
             var data = dataReader.GetNextData();
             //Normalizing
-            var normalizedData = data;
+            var normalizedData = NormalizeData(data);
             //Predict result of normalized Data vector
             var result = PredictState(normalizedData);
             return result ? "NORMAL" : "ANOMALY";
         }
         private Data NormalizeData(Data data)
         {
-            //Nomalizing
-            Data normalizedData = data.Normalize();
+            //Normalize Data vector
+            Data normalizedData = new Data(data.Length);
+            for (int i = 0; i < normalizedData.Length; i++)
+                normalizedData[i] = (data[i] - mean[i]) / rmsd[i];
             return normalizedData;
         }
         private bool PredictState(Data data)

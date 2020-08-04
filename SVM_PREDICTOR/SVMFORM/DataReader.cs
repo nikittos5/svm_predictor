@@ -18,11 +18,12 @@ namespace SVMFORM
         private string currentFile;
         private FileStream stream;
         private IExcelDataReader reader;
+        private int skips = 9;
         private void GetReader()
         {
             //Creates new Reader associated with directory
             stream = File.Open(currentFile, FileMode.Open, FileAccess.Read);
-            reader = ExcelReaderFactory.CreateReader(stream);
+            reader = ExcelReaderFactory.CreateReader(stream) ;
         }
         public DataReader(string filesDirectory)
         {
@@ -30,7 +31,6 @@ namespace SVMFORM
             currentDirecory = filesDirectory;
             UnreadUpdate();
             GetReader();
-            GetNextData();
         }
         public void UnreadUpdate()
         {
@@ -59,24 +59,42 @@ namespace SVMFORM
         }
         public Data GetNextData()
         {
-            //Gets next Data vector
+            //Gets next Data vector and skips zeros
             if (reader.Read())
-            { 
-                Data data = new Data(reader.FieldCount);
+            {
+                int shift = 0;
+                HashSet<int> zeros = new HashSet<int>() { 57, 116, 117, 118, 119, 124, 125, 126, 127 };
+                Data data = new Data(reader.FieldCount - skips);
                 for (int i = 0; i < reader.FieldCount; i++)
-                    data[i] = reader.GetDouble(i);
+                {     
+                    if (zeros.Contains(i))
+                    {
+                        shift++;
+                        continue;
+                    }
+                    data[i-shift] = reader.GetDouble(i);
+                }
                 return data;
             }
             else
             {
                 GetReader();
+                stream.Close();
+                reader.Close();
                 return GetNextData();
             }
         }
-        public double[][] GetDataTable(string sheet = "sheet1")
+        public DataTable GetDataTable(string sheet = "sheet1")
         {
             //Gets whole data table
-            return reader.AsDataSet().Tables[sheet].ToJagged();
+            HashSet<int> zeros = new HashSet<int>() { 57, 116, 117, 118, 119, 124, 125, 126, 127 };
+            DataTable dataTable = reader.AsDataSet().Tables[sheet];
+            int columnsCount = dataTable.Columns.Count-1;
+            for(int i = columnsCount; i>=0; i--)
+            {
+                if (zeros.Contains(i)) dataTable.Columns.Remove(dataTable.Columns[i]);
+            }
+            return dataTable;
            
         }
     }

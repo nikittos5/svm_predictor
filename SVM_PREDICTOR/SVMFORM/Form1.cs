@@ -14,7 +14,6 @@ namespace SVMFORM
     public partial class Form1 : Form
     {
         private Solver solver;
-        private DataReader dataReader;
         public int k = 1;
         public Form1()
         {
@@ -36,7 +35,6 @@ namespace SVMFORM
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
-
             Console.WriteLine("Читаем из базы");
             var result = await Task.Run(solver.HandleNextData) + (k++).ToString();
             label1.Text = result;

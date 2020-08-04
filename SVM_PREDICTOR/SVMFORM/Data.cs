@@ -11,6 +11,13 @@ namespace SVMFORM
     {
         private double[] dataVector;
         public Data() { }
+        public int Length
+        {
+            get
+            {
+                return dataVector.Length;
+            }
+        }
         public Data(int n)
         {
             //create n-dim vector 
@@ -33,18 +40,6 @@ namespace SVMFORM
             //create double array from vector Data
             double[] resVector = new double[dataVector.Length];
             Array.Copy(dataVector, resVector, dataVector.Length);
-            return resVector;
-        }
-        public Data Normalize()
-        {
-            //Normalize data
-            Data resVector = new Data(dataVector.ToArray());
-            double lamb = 0;
-            for (int i = 0; i < resVector.dataVector.Length; i++)
-                lamb += resVector.dataVector[i]* resVector.dataVector[i];
-            lamb = Math.Sqrt(lamb);
-            for (int i = 0; i < resVector.dataVector.Length; i++)
-                resVector.dataVector[i] /= lamb;
             return resVector;
         }
     }
