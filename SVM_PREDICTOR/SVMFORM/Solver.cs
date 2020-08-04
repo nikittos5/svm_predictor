@@ -8,51 +8,50 @@ using Accord.IO;
 using Accord.Math;
 using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
+using Accord;
 
 namespace SVMFORM
 {
     class Solver
     {
-        private double[][] dataTable;
-        private int numberOfNextData = 0;
+        private Data data;
         private SupportVectorMachine<Gaussian> learnedSVM;
         private Random random;
+        private DataReader dataReader;
         public Solver()
         {
-            random = new Random();//оставил на всякий
-        }
-        public void GetNextDataTable(string pathToNextTable, string sheet="sheet1")
-        {
-            dataTable = new ExcelReader(pathToNextTable).GetWorksheet(sheet).ToJagged();//читает из Excell в dataTable
+            //Randomizer
+            random = new Random();
+            //Resp for reading data
+            dataReader = new DataReader(@"data");
+            GetLearnedSVM(@"train_data\1data.xlsx");
+
         }
         public void GetLearnedSVM(string pathToTrainData)
         {
+            //Create new svm and teach it with train data
             Teacher teacher = new Teacher();
-            teacher.GetTrainData(pathToTrainData);//Загружает тренировочные данные для обучения модели
-            learnedSVM = teacher.Learn();//Обучает 
+            teacher.GetTrainData(pathToTrainData);
+            learnedSVM = teacher.Learn();
         }
         public string HandleNextData()
         {
-            var data = ReadNextData();//Получает вектор Data из dataTable
-            var normalizedData = NormalizeData(data);//Нормализация вектора
-            var result = PredictState(normalizedData);//Для вектора предсказывает "аномальность"
+            var data = dataReader.GetNextData();
+            //Normalizing
+            var normalizedData = data;
+            //Predict result of normalized Data vector
+            var result = PredictState(normalizedData);
             return result ? "NORMAL" : "ANOMALY";
-        }
-        private Data ReadNextData()
-        {
-            if (numberOfNextData > dataTable.GetLength(0)) numberOfNextData = 0;
-            return new Data(dataTable[numberOfNextData++]);
-            //Из матрицы dataTable получает вектор Data под номером numberOfNextData
         }
         private Data NormalizeData(Data data)
         {
-            //Нормализация вектора
+            //Nomalizing
             Data normalizedData = data.Normalize();
             return normalizedData;
         }
         private bool PredictState(Data data)
         {
-            //Работа SVM над одним вектором
+            //SVM doing it's job
             return learnedSVM.Decide(data.ToArray());
         }
 

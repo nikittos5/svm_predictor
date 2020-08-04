@@ -19,13 +19,13 @@ namespace SVMFORM
         private double[][] trainDataTable;
         public void GetTrainData(string pathToTrainData, string sheet = "sheet1")
         {
-            //Загружает данные из Excell в trainDataTable
-            trainDataTable = new ExcelReader(pathToTrainData).GetWorksheet(sheet).ToJagged();
-            //Нормализация
-            trainDataTable = NormalizeData(trainDataTable);
+            //Gets train table from excell file to double matrix (svm learning method requires double matrix as argument)
+            trainDataTable = new DataReader("train_data").GetDataTable();
+
         }
         private double[][] NormalizeData(double[][] dataTable)
         {
+            //Normalize data matrix
             double[][] dTable = new double[dataTable.GetLength(0)][];
             for (int i = 0; i < dataTable.GetLength(0); i++)
             {
@@ -47,8 +47,9 @@ namespace SVMFORM
         {
             var teacher = new OneclassSupportVectorLearning<Gaussian>()
             {
-                Kernel = new Gaussian(0.1), // Будем это ядро использовать
-                Nu = 0.1//Вот этот коэффициент как-то влияет на точность, я до конца не понял
+                //Gaussian kernel
+                Kernel = new Gaussian(0.1),
+                Nu = 0.1
             };
             return teacher.Learn(trainDataTable);
         }
