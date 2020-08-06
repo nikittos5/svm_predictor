@@ -30,7 +30,7 @@ namespace SVMFORM
 
         private void Button1_Click(object sender, EventArgs e)
         {
-  
+            solver.qualityCheking.PrintStats();
         }
 
         private async void timer1_Tick(object sender, EventArgs e)

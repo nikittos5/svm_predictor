@@ -9,6 +9,7 @@ using Accord.Math;
 using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
 using Accord;
+using Accord.Math.Optimization;
 
 namespace SVMFORM
 {
@@ -17,6 +18,7 @@ namespace SVMFORM
         private SupportVectorMachine<Gaussian> learnedSVM;
         private Random random;
         private DataReader dataReader;
+        public QualityChecking qualityCheking;
         private double[] mean;
         private double[] rmsd;
         public Solver()
@@ -25,6 +27,8 @@ namespace SVMFORM
             random = new Random();
             //Resp for reading data
             dataReader = new DataReader(@"data");
+            //Checks quality of predictions
+            qualityCheking = new QualityChecking();
             GetLearnedSVM(@"train_data\1data.xlsx");
 
         }
@@ -44,6 +48,7 @@ namespace SVMFORM
             var normalizedData = NormalizeData(data);
             //Predict result of normalized Data vector
             var result = PredictState(normalizedData);
+            qualityCheking.UpdateStats(result, true);
             return result ? "NORMAL" : "ANOMALY";
         }
         private Data NormalizeData(Data data)
@@ -59,6 +64,5 @@ namespace SVMFORM
             //SVM doing it's job
             return learnedSVM.Decide(data.ToArray());
         }
-
     }
 }
