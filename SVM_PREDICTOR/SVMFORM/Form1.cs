@@ -21,7 +21,7 @@ namespace SVMFORM
             this.label1.Text = "Normal0";
             //Teach model and issues predicts
             solver = new Solver();
-        }
+            }
 
         private void Form1_Load(object sender, EventArgs e)
         {
