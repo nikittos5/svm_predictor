@@ -18,6 +18,8 @@ namespace SVMFORM
         public Form1()
         {
             InitializeComponent();
+            SqlReader reader = new SqlReader(@"Data Source=DESKTOP-OIVS035; Initial Catalog=NewTestDataBase;
+            Integrated Security=True");
             this.label1.Text = "Normal0";
             //Teach model and issues predicts
             solver = new Solver();

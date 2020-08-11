@@ -27,7 +27,7 @@ namespace SVMFORM
         }
         public DataReader(string filesDirectory)
         {
-            //Create new DataReader in directory
+            //Create new ExcelDataReader in directory
             currentDirecory = filesDirectory;
             UnreadUpdate();
             GetReader();
@@ -37,7 +37,7 @@ namespace SVMFORM
             //Updates unread files in current directory
             listOfUnreadFiles = new List<string>(Directory.GetFiles(currentDirecory));
             foreach (string file in listOfUnreadFiles)
-                if (listOfReadFiles.IndexOf(file) != -1)
+                if (listOfReadFiles.Contains(file))
                     listOfUnreadFiles.Remove(file);
             SetCurrentFile();
         }
@@ -78,9 +78,9 @@ namespace SVMFORM
             }
             else
             {
-                GetReader();
                 stream.Close();
                 reader.Close();
+                GetReader();
                 return GetNextData();
             }
         }

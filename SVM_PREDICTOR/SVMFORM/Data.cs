@@ -11,13 +11,6 @@ namespace SVMFORM
     {
         private double[] dataVector;
         public Data() { }
-        public int Length
-        {
-            get
-            {
-                return dataVector.Length;
-            }
-        }
         public Data(int n)
         {
             //create n-dim vector 
@@ -28,6 +21,13 @@ namespace SVMFORM
             //create vector Data from double array 
             dataVector = new double[dVector.Length];
             Array.Copy(dVector, dataVector, dVector.Length);
+        }
+        public int Length
+        {
+            get
+            {
+                return dataVector.Length;
+            }
         }
         public double this[int n]
         {
