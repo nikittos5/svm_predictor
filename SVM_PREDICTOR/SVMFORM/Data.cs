@@ -1,9 +1,4 @@
-﻿using Accord.Statistics.Kernels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace SVMFORM
 {
@@ -15,12 +10,6 @@ namespace SVMFORM
         {
             //create n-dim vector 
             dataVector = new double[n];
-        }
-        public Data(double[] dVector)
-        {
-            //create vector Data from double array 
-            dataVector = new double[dVector.Length];
-            Array.Copy(dVector, dataVector, dVector.Length);
         }
         public int Length
         {

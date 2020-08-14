@@ -36,9 +36,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(104, 102);
+            this.button1.Location = new System.Drawing.Point(139, 126);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 29);
+            this.button1.Size = new System.Drawing.Size(116, 36);
             this.button1.TabIndex = 0;
             this.button1.Text = "ОК";
             this.button1.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(67, 34);
+            this.label1.Location = new System.Drawing.Point(89, 42);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(183, 39);
+            this.label1.Size = new System.Drawing.Size(225, 48);
             this.label1.TabIndex = 2;
             this.label1.Text = "ANOMALY";
             // 
@@ -62,11 +64,12 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 152);
+            this.ClientSize = new System.Drawing.Size(391, 187);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "SVM";
             this.Load += new System.EventHandler(this.Form1_Load);

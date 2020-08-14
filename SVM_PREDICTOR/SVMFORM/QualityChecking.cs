@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SVMFORM
 {
@@ -42,8 +38,8 @@ namespace SVMFORM
         public void PrintStats()
         {
             Console.WriteLine("Количество проверенных записей: {0}", generalCount);
-            Console.WriteLine("Количество нормальных записей: {0}", posAndRight+negButWrong);
-            Console.WriteLine("Количество аномальных записей: {0}", posButWrong+negAndRight);
+            Console.WriteLine("Количество нормальных записей (верное): {0}", posAndRight+negButWrong);
+            Console.WriteLine("Количество аномальных записей (верное): {0}", posButWrong+negAndRight);
             Console.WriteLine("Количетсво верно выявленных нормальных записей: {0}", posAndRight);
             Console.WriteLine("Количество верно выявленных аномальных записей: {0}", negAndRight);
             Console.WriteLine("Доля выявленных нормальных записей: {0}%", (posAndRight+posButWrong)*100/generalCount);

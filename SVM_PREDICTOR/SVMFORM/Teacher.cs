@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using Accord.IO;
+﻿using System.Data;
 using Accord.Math;
 using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
 using Accord.Statistics.Filters;
-using Accord;
-using Accord.Math.Integration;
+using System.Collections.Generic;
+using System;
 
 namespace SVMFORM
 {
@@ -21,16 +15,16 @@ namespace SVMFORM
         private double[][] trainDataJagged;
         public double[] mean;
         public double[] rmsd;
-        public void GetTrainData(string pathToTrainData, string sheet = "sheet1")
+        public void GetTrainData(string connectionString, string dataTableName, string sheet = "sheet1")
         {
             //Gets train table from excell file to double matrix (svm learning method requires double matrix as argument)
-            trainDataTable = new DataReader("train_data").GetDataTable();
+            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(50000); //new DataReader(pathToTrainData).GetDataTable();
             trainDataJagged = NormalizeData(trainDataTable).ToJagged();
         }
         private DataTable NormalizeData(DataTable dataTable)
         {
             //Normalization
-            Normalization normalization = new Normalization(trainDataTable);
+            Normalization normalization = new Normalization(dataTable);
             mean = new double[dataTable.Columns.Count];
             rmsd = new double[dataTable.Columns.Count];
             for(int i = 0; i< dataTable.Columns.Count; i++)

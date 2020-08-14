@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Data;
-using Accord.Math;
 using ExcelDataReader;
 
 namespace SVMFORM
@@ -13,49 +8,19 @@ namespace SVMFORM
     class DataReader
     {
         //Reading data
-        private List<string> listOfUnreadFiles, listOfReadFiles=new List<string>();
-        private string currentDirecory;
-        private string currentFile;
         private FileStream stream;
         private IExcelDataReader reader;
         private int skips = 9;
-        private void GetReader()
+        private void GetReader(string filePath)
         {
             //Creates new Reader associated with directory
-            stream = File.Open(currentFile, FileMode.Open, FileAccess.Read);
-            reader = ExcelReaderFactory.CreateReader(stream) ;
+            stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
+            reader = ExcelReaderFactory.CreateReader(stream);
         }
-        public DataReader(string filesDirectory)
+        public DataReader(string filePath)
         {
             //Create new ExcelDataReader in directory
-            currentDirecory = filesDirectory;
-            UnreadUpdate();
-            GetReader();
-        }
-        public void UnreadUpdate()
-        {
-            //Updates unread files in current directory
-            listOfUnreadFiles = new List<string>(Directory.GetFiles(currentDirecory));
-            foreach (string file in listOfUnreadFiles)
-                if (listOfReadFiles.Contains(file))
-                    listOfUnreadFiles.Remove(file);
-            SetCurrentFile();
-        }
-        public void ChangeDirectory(string filesDirectory)
-        {
-            //Change current directory
-            currentDirecory = filesDirectory;
-            listOfUnreadFiles = new List<string>(Directory.GetFiles(filesDirectory));
-            listOfReadFiles = new List<string>();
-            UnreadUpdate();
-            GetReader();
-        }
-        public void SetCurrentFile()
-        {
-            //Sets cureent file
-            currentFile = listOfUnreadFiles[0];
-            listOfReadFiles.Add(currentFile);
-            listOfUnreadFiles.Remove(currentFile);
+            GetReader(filePath);
         }
         public Data GetNextData()
         {
@@ -78,10 +43,7 @@ namespace SVMFORM
             }
             else
             {
-                stream.Close();
-                reader.Close();
-                GetReader();
-                return GetNextData();
+                return new Data();
             }
         }
         public DataTable GetDataTable(string sheet = "sheet1")

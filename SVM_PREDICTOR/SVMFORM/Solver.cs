@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using Accord.IO;
-using Accord.Math;
 using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
-using Accord;
-using Accord.Math.Optimization;
 
 namespace SVMFORM
 {
@@ -17,7 +8,7 @@ namespace SVMFORM
     {
         private SupportVectorMachine<Gaussian> learnedSVM;
         private Random random;
-        private DataReader dataReader;
+        private SqlReader sqlReader;
         public QualityChecking qualityCheking;
         private double[] mean;
         private double[] rmsd;
@@ -26,24 +17,24 @@ namespace SVMFORM
             //Randomizer
             random = new Random();
             //Resp for reading data
-            dataReader = new DataReader(@"data");
+            sqlReader = new SqlReader(@"Data Source=DESKTOP-OIVS035; Initial Catalog=TestData; Integrated Security=True", "RW1A0");
             //Checks quality of predictions
             qualityCheking = new QualityChecking();
-            GetLearnedSVM(@"train_data\1data.xlsx");
+            GetLearnedSVM(@"Data Source=DESKTOP-OIVS035; Initial Catalog=TestData; Integrated Security=True", "RW1A0");
 
         }
-        public void GetLearnedSVM(string pathToTrainData)
+        public void GetLearnedSVM(string connectionString, string dataTableName)
         {
             //Create new svm and teach it with train data
             Teacher teacher = new Teacher();
-            teacher.GetTrainData(pathToTrainData);
+            teacher.GetTrainData(connectionString, dataTableName);
             learnedSVM = teacher.Learn();
             mean = teacher.mean;
             rmsd = teacher.rmsd;
         }
         public string HandleNextData()
         {
-            var data = dataReader.GetNextData();
+            var data = sqlReader.GetNextData();
             //Normalizing
             var normalizedData = NormalizeData(data);
             //Predict result of normalized Data vector

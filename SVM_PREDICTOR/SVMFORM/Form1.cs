@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace SVMFORM
 {
@@ -18,11 +11,10 @@ namespace SVMFORM
         public Form1()
         {
             InitializeComponent();
-            SqlReader reader = new SqlReader(@"Data Source=DESKTOP-OIVS035; Initial Catalog=NewTestDataBase;
-            Integrated Security=True");
             this.label1.Text = "Normal0";
             //Teach model and issues predicts
             solver = new Solver();
+            Data d = new SqlReader(@"Data Source=DESKTOP-OIVS035; Initial Catalog=TestData; Integrated Security=True", "RW1A0").GetNextData();
             }
 
         private void Form1_Load(object sender, EventArgs e)
