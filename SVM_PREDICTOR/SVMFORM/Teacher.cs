@@ -18,7 +18,7 @@ namespace SVMFORM
         public void GetTrainData(string connectionString, string dataTableName, string sheet = "sheet1")
         {
             //Gets train table from excell file to double matrix (svm learning method requires double matrix as argument)
-            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(50000); //new DataReader(pathToTrainData).GetDataTable();
+            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(5000); //new DataReader(pathToTrainData).GetDataTable();
             trainDataJagged = NormalizeData(trainDataTable).ToJagged();
         }
         private DataTable NormalizeData(DataTable dataTable)

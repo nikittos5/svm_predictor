@@ -35,17 +35,17 @@ namespace SVMFORM
             }
 
         }
-        public void PrintStats()
+        public string GetStats()
         {
-            Console.WriteLine("Количество проверенных записей: {0}", generalCount);
-            Console.WriteLine("Количество нормальных записей (верное): {0}", posAndRight+negButWrong);
-            Console.WriteLine("Количество аномальных записей (верное): {0}", posButWrong+negAndRight);
-            Console.WriteLine("Количетсво верно выявленных нормальных записей: {0}", posAndRight);
-            Console.WriteLine("Количество верно выявленных аномальных записей: {0}", negAndRight);
-            Console.WriteLine("Доля выявленных нормальных записей: {0}%", (posAndRight+posButWrong)*100/generalCount);
-            Console.WriteLine("Доля верно выявленных нормальных записей: {0}%", posAndRight*100/generalCount);
-            Console.WriteLine("Доля выявленных аномальных записей: {0}%", (negAndRight+negButWrong)*100/generalCount);
-            Console.WriteLine("Доля верно выявленных аномальных записей: {0}%", negAndRight*100/generalCount);
+            return String.Format("Количество проверенных записей: {0}" + Environment.NewLine +
+              "Количетсво верно выявленных нормальных записей: {1}" + Environment.NewLine +
+              "Количество верно выявленных аномальных записей: {2}" + Environment.NewLine +
+              "Доля верно выявленных записей (отн. всех записей): {3}" + Environment.NewLine +
+              "Доля нормальных записей, выявленных верно (отн. всех нормальных): {4}%" + Environment.NewLine +
+              "Доля аномальных записей, выявленных верно (отн. всех аномальных): {5}%",
+              generalCount, posAndRight,  negAndRight, (posAndRight+negAndRight) * 100 / (generalCount),
+              (posAndRight+negButWrong!=0) ? posAndRight * 100 / (posAndRight+negButWrong) : 0, 
+              (negAndRight + posButWrong!=0) ? negAndRight * 100 / (negAndRight+posButWrong) : 0);;          
         }
     }
 }

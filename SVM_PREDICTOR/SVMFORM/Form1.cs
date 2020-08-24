@@ -11,11 +11,9 @@ namespace SVMFORM
         public Form1()
         {
             InitializeComponent();
-            this.label1.Text = "Normal0";
-            //Teach model and issues predicts
-            solver = new Solver();
-            Data d = new SqlReader(@"Data Source=DESKTOP-OIVS035; Initial Catalog=TestData; Integrated Security=True", "RW1A0").GetNextData();
-            }
+            this.label1.Text = "     SVM";
+            this.timer1.Enabled = false;
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -24,14 +22,33 @@ namespace SVMFORM
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            solver.qualityCheking.PrintStats();
+            //solver.qualityCheking.PrintStats();
+            //Teach model and issues predicts
+            solver = new Solver();
+            this.timer1.Enabled = true;
         }
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (solver == null)
+                this.textBox1.Text = "Stats don't exist";
+            else
+                this.textBox1.Text = solver.qualityCheking.GetStats();
+        }
         private async void timer1_Tick(object sender, EventArgs e)
         {
             Console.WriteLine("Читаем из базы");
             var result = await Task.Run(solver.HandleNextData) + (k++).ToString();
             label1.Text = result;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
