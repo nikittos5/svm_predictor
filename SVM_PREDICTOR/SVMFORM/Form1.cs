@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,10 +15,26 @@ namespace SVMFORM
             this.timer1.Enabled = false;
         }
         private void Button1_Click(object sender, EventArgs e)
-        {
+        { 
             //Teach model and issues predicts
-            solver = new Solver();
-            this.timer1.Enabled = true;
+           if (this.textBox2.Text == "" || this.textBox3.Text == "" || this.textBox4.Text == "")
+                this.textBox1.Text = "Some of the fields required to fill are empty";
+            else
+            {
+                this.textBox1.Text = "";
+                string[] splitString = this.textBox2.Text.Split(new char[] { ';' });
+                string connectionStringTest = "Data Source="+splitString[0]+";Initial Catalog="+splitString[1]+ ";Integrated Security=true;",
+                dataTableNameTest = splitString[2];
+                splitString = this.textBox3.Text.Split(new char[] { ';' });
+                string connectionStringTrain = "Data Source=" + splitString[0] + ";Initial Catalog=" + splitString[1] + ";Integrated Security=true;",
+                dataTableNameTrain = splitString[2];
+                splitString = this.textBox4.Text.Split(new char[] { ';' });
+                HashSet<int> permit = new HashSet<int>();
+                foreach (var num in splitString)
+                    permit.Add(Convert.ToInt32(num));
+                solver = new Solver(connectionStringTest, dataTableNameTest, connectionStringTrain, dataTableNameTrain, permit);
+                this.timer1.Enabled = true;
+            }
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -35,5 +52,11 @@ namespace SVMFORM
         private void textBox1_TextChanged(object sender, EventArgs e) { }
         private void label1_Click(object sender, EventArgs e) { }
         private void Form1_Load(object sender, EventArgs e) { }
+        private void textBox2_TextChanged(object sender, EventArgs e) { }
+        private void label2_Click(object sender, EventArgs e) { }
+        private void label4_Click(object sender, EventArgs e) { }
+        private void label5_Click(object sender, EventArgs e) { }
+        private void label6_Click(object sender, EventArgs e) { }
+        private void label7_Click(object sender, EventArgs e) { }
     }
 }

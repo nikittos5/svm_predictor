@@ -13,12 +13,12 @@ namespace SVMFORM
         HashSet<int> permit;
         private int startId;
         private int tempId;
-        public SqlReader(string connectionString, string dataTableName)
+        public SqlReader(string connectionString, string dataTableName, HashSet<int> permit)
         {
             //Sets new sql reader
             sqlConnection = new SqlConnection(connectionString);
             currentTable = dataTableName;
-            permit = new HashSet<int>() { 76, 77, 78, 90, 91, 93, 105, 106, 107, 108, 195, 197, 210, 225, 243, 270, 300, 452, 468, 500 };
+            this.permit = permit;
             startId = 1023;
             tempId = startId;
         }

@@ -1,5 +1,6 @@
 ﻿using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
+using System.Collections.Generic;
 
 namespace SVMFORM
 {
@@ -10,20 +11,20 @@ namespace SVMFORM
         public QualityChecking qualityCheking;
         private double[] mean;
         private double[] rmsd;
-        public Solver()
+        public Solver(string connectionStringTest, string dataTableNameTest, string connectionStringTrain, string dataTableNameTrain, HashSet<int> permit)
         {
             //Resp for reading data
-            sqlReader = new SqlReader(@"Data Source=DESKTOP-OIVS035; Initial Catalog=TestData; Integrated Security=True", "RW1A0");
+            sqlReader = new SqlReader(connectionStringTest, dataTableNameTest, permit);
             //Checks quality of predictions
             qualityCheking = new QualityChecking();
-            GetLearnedSVM(@"Data Source=DESKTOP-OIVS035; Initial Catalog=TestData; Integrated Security=True", "RW1A0");
-
+            //Gets learned SVM
+            GetLearnedSVM(connectionStringTrain, dataTableNameTrain, permit);
         }
-        public void GetLearnedSVM(string connectionString, string dataTableName)
+        public void GetLearnedSVM(string connectionString, string dataTableName, HashSet<int> permit)
         {
             //Create new svm and teach it with train data
             Teacher teacher = new Teacher();
-            teacher.GetTrainData(connectionString, dataTableName);
+            teacher.GetTrainData(connectionString, dataTableName, permit);
             learnedSVM = teacher.Learn();
             mean = teacher.mean;
             rmsd = teacher.rmsd;

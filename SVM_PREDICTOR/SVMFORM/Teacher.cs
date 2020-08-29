@@ -4,6 +4,7 @@ using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
 using Accord.Statistics.Filters;
+using System.Collections.Generic;
 
 namespace SVMFORM
 {
@@ -13,10 +14,10 @@ namespace SVMFORM
         private double[][] trainDataJagged;
         public double[] mean;
         public double[] rmsd;
-        public void GetTrainData(string connectionString, string dataTableName, string sheet = "sheet1")
+        public void GetTrainData(string connectionString, string dataTableName, HashSet<int> permit)
         {
             //Gets train data from sql database
-            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(25000);
+            trainDataTable = new SqlReader(connectionString, dataTableName, permit).GetLastNData(25000);
             //Normalizes gotten data
             trainDataJagged = NormalizeData(trainDataTable).ToJagged();
         }
