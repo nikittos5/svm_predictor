@@ -14,12 +14,6 @@ namespace SVMFORM
             this.label1.Text = "     SVM";
             this.timer1.Enabled = false;
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
             //solver.qualityCheking.PrintStats();
@@ -39,16 +33,6 @@ namespace SVMFORM
             Console.WriteLine("Читаем из базы");
             var result = await Task.Run(solver.HandleNextData) + (k++).ToString();
             label1.Text = result;
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -7,25 +7,24 @@ namespace SVMFORM
 {
     class SqlReader
     {
+        //Read data from database
         private string currentTable;
-        private string connectionString;
         private SqlConnection sqlConnection;
-        /*HashSet<int> permit = new HashSet<int>() { 76, 77, 78, 84, 86, 90, 91, 92, 93, 99, 101, 105, 106, 107, 108, 114, 116, 120, 121, 122, 123, 131, 136, 137, 138, 146, 151,
-                152, 153, 159, 161, 165, 166, 167, 168, 174, 176, 180, 181, 182, 183, 189, 195, 196, 197, 198, 204, 206, 210, 211, 212, 213, 219, 221, 225, 226, 227, 228, 234, 236,
-                240, 241, 242, 243, 249, 251, 255, 256, 257, 258, 264, 266, 270, 271, 272, 273, 279, 281, 285, 286, 287, 288, 300, 301, 302, 303, 315, 316, 317, 318, 330, 331, 332,
-                333, 345, 376, 378, 391, 392, 393, 401, 406, 407, 408, 414, 416, 420, 421, 422, 423, 429, 431, 435, 451, 452, 453, 459, 461, 465, 466, 467, 468, 474, 476, 480, 500,
-                503, 504, 506, 510, 511, 550 };*/
-        HashSet<int> permit = new HashSet<int>() { 76, 77, 78, 90, 91, 93, 105, 106, 107, 108, 195, 197, 210, 225, 243, 270, 300, 452, 468, 500 };
-        private int startId = 1023;
-        private int tempId = 1023;
+        HashSet<int> permit;
+        private int startId;
+        private int tempId;
         public SqlReader(string connectionString, string dataTableName)
         {
+            //Sets new sql reader
             sqlConnection = new SqlConnection(connectionString);
-            this.connectionString = connectionString;
             currentTable = dataTableName;
+            permit = new HashSet<int>() { 76, 77, 78, 90, 91, 93, 105, 106, 107, 108, 195, 197, 210, 225, 243, 270, 300, 452, 468, 500 };
+            startId = 1023;
+            tempId = startId;
         }
         public Data GetNextData()
         {
+            //Read next data vector from datatable
             sqlConnection.Open();
             SqlDataReader sqlDataReader = new SqlCommand("Select * FROM "+currentTable+" WHERE id="+(tempId++).ToString(), sqlConnection).ExecuteReader();
             if (sqlDataReader.Read())
@@ -57,6 +56,7 @@ namespace SVMFORM
         }
         public DataTable GetLastNData(int N)
         {
+            //Read last N data vectors from the end of datatable
             sqlConnection.Open();
             int shift;
             SqlDataReader sqlDataReader = new SqlCommand("Select COUNT(*) from " + currentTable, sqlConnection).ExecuteReader();

@@ -1,5 +1,4 @@
-﻿using System;
-using Accord.Statistics.Kernels;
+﻿using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
 
 namespace SVMFORM
@@ -7,15 +6,12 @@ namespace SVMFORM
     class Solver
     {
         private SupportVectorMachine<Gaussian> learnedSVM;
-        private Random random;
         private SqlReader sqlReader;
         public QualityChecking qualityCheking;
         private double[] mean;
         private double[] rmsd;
         public Solver()
         {
-            //Randomizer
-            random = new Random();
             //Resp for reading data
             sqlReader = new SqlReader(@"Data Source=DESKTOP-OIVS035; Initial Catalog=TestData; Integrated Security=True", "RW1A0");
             //Checks quality of predictions
@@ -34,6 +30,7 @@ namespace SVMFORM
         }
         public string HandleNextData()
         {
+            //Gets new data vector
             var data = sqlReader.GetNextData();
             //Normalizing
             var normalizedData = NormalizeData(data);
@@ -52,7 +49,7 @@ namespace SVMFORM
         }
         private bool PredictState(Data data)
         {
-            //SVM doing it's job
+            //SVM doing it's job :)
             return learnedSVM.Decide(data.ToArray());
         }
     }

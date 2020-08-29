@@ -4,9 +4,11 @@ namespace SVMFORM
 {
     class QualityChecking
     {
+        //Quality Checking collects stats of SVM predictions
         private int posAndRight=0, posButWrong=0, negAndRight=0, negButWrong=0, generalCount=0;
         public void UpdateStats(bool receivedResult, bool expectedResult)
         {
+            //Change counts of right and wrong predictions
             generalCount++;
             switch (receivedResult)
             {
@@ -37,6 +39,7 @@ namespace SVMFORM
         }
         public string GetStats()
         {
+            //Returns stats by string 
             return String.Format("Количество проверенных записей: {0}" + Environment.NewLine +
               "Количетсво верно выявленных нормальных записей: {1}" + Environment.NewLine +
               "Количество верно выявленных аномальных записей: {2}" + Environment.NewLine +

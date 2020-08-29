@@ -13,6 +13,7 @@ namespace SVMFORM
         }
         public int Length
         {
+            //Length of data vector
             get
             {
                 return dataVector.Length;

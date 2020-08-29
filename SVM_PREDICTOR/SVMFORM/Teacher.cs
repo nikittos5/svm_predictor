@@ -17,13 +17,14 @@ namespace SVMFORM
         public double[] rmsd;
         public void GetTrainData(string connectionString, string dataTableName, string sheet = "sheet1")
         {
-            //Gets train table from excell file to double matrix (svm learning method requires double matrix as argument)
-            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(5000); //new DataReader(pathToTrainData).GetDataTable();
+            //Gets train data from sql database
+            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(5000);
+            //Normalizes gotten data
             trainDataJagged = NormalizeData(trainDataTable).ToJagged();
         }
         private DataTable NormalizeData(DataTable dataTable)
         {
-            //Normalization
+            //Normalization of data
             Normalization normalization = new Normalization(dataTable);
             mean = new double[dataTable.Columns.Count];
             rmsd = new double[dataTable.Columns.Count];
@@ -36,6 +37,7 @@ namespace SVMFORM
         }
         public SupportVectorMachine<Gaussian> Learn()
         {
+            //Creates new SVM and teach it
             var teacher = new OneclassSupportVectorLearning<Gaussian>()
             {
                 //Gaussian kernel
