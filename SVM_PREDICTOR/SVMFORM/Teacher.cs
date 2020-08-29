@@ -4,8 +4,6 @@ using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines;
 using Accord.Statistics.Filters;
-using System.Collections.Generic;
-using System;
 
 namespace SVMFORM
 {
@@ -18,7 +16,7 @@ namespace SVMFORM
         public void GetTrainData(string connectionString, string dataTableName, string sheet = "sheet1")
         {
             //Gets train data from sql database
-            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(5000);
+            trainDataTable = new SqlReader(connectionString, dataTableName).GetLastNData(25000);
             //Normalizes gotten data
             trainDataJagged = NormalizeData(trainDataTable).ToJagged();
         }

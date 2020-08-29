@@ -7,7 +7,6 @@ namespace SVMFORM
     public partial class Form1 : Form
     {
         private Solver solver;
-        public int k = 1;
         public Form1()
         {
             InitializeComponent();
@@ -16,7 +15,6 @@ namespace SVMFORM
         }
         private void Button1_Click(object sender, EventArgs e)
         {
-            //solver.qualityCheking.PrintStats();
             //Teach model and issues predicts
             solver = new Solver();
             this.timer1.Enabled = true;
@@ -31,8 +29,11 @@ namespace SVMFORM
         private async void timer1_Tick(object sender, EventArgs e)
         {
             Console.WriteLine("Читаем из базы");
-            var result = await Task.Run(solver.HandleNextData) + (k++).ToString();
+            var result = await Task.Run(solver.HandleNextData);
             label1.Text = result;
         }
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
+        private void label1_Click(object sender, EventArgs e) { }
+        private void Form1_Load(object sender, EventArgs e) { }
     }
 }
